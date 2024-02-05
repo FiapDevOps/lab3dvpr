@@ -100,7 +100,7 @@ resource "aws_instance" "monitoring_stack_lab" {
     associate_public_ip_address = true    
     user_data                   = "${file("templates/prometheus.yaml")}"
     vpc_security_group_ids      = [data.aws_security_group.default.id]
-    key_name                    = "id_lab"
+    key_name                    = "vockey"
 
     tags = {
         terraform   = "true"
