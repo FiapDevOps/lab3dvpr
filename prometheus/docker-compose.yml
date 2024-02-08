@@ -13,7 +13,7 @@ services:
        monitoring:
        
   probe:
-    image: gcr.io/cre-prometheus-slo-alerting/cloudprober:latest
+    image: cloudprober/cloudprober:latest
     environment:
       - PORT=8081
     volumes:
