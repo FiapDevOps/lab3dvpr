@@ -13,6 +13,6 @@ runcmd:
   - systemctl start docker && systemctl enable docker
   - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   - chmod +x /usr/local/bin/docker-compose
-  - git clone https://github.com/fiapdevops/lab3dvpr /home/ubuntu/lab3dvpr
+  - git clone  --branch main https://github.com/fiapdevops/lab3dvpr /home/ubuntu/lab3dvpr
   - chown -R ubuntu:ubuntu /home/ubuntu/lab3dvpr
   - sudo /usr/local/bin/docker-compose -f /home/ubuntu/lab3dvpr/prometheus/docker-compose.yml up -d

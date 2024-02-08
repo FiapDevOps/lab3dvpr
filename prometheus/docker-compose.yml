@@ -12,6 +12,18 @@ services:
     networks:
        monitoring:
        
+  probe:
+    image: gcr.io/cre-prometheus-slo-alerting/cloudprober:latest
+    environment:
+      - PORT=8081
+    volumes:
+      - ./probe.cfg:/etc/cloudprober.cfg
+    ports:
+      - 8081:8080
+    restart: unless-stopped
+    networks:
+       monitoring:
+
   prometheus:
     image: prom/prometheus:v2.49.1
     volumes:
