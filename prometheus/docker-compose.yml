@@ -1,16 +1,6 @@
 version: '3.8'
   
 services:
-
-  app:
-    image: devfiap/python-flask-app:0.1
-    environment:
-      - PORT=8080
-    ports:
-      - 8080:8080
-    restart: unless-stopped
-    networks:
-       monitoring:
        
   probe:
     image: gcr.io/cre-prometheus-slo-alerting/cloudprober:latest

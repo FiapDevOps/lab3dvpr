@@ -103,8 +103,8 @@ resource "aws_instance" "monitoring_stack_lab" {
     key_name                    = "vockey"
 
     tags = {
-        terraform   = "true"
         env         = "lab"
-        tier        = "defaut"
+        tier        = "fe"
+        Name        = "prometheus"
     }
 }
