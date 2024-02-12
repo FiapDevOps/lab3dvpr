@@ -55,7 +55,7 @@ resource "aws_security_group" "lab_server" {
     from_port   = 9100
     to_port     = 9100
     protocol    = "tcp"
-    security_groups = aws.security_group_id.lab_prometheus
+    security_groups = [aws_security_group.lab_prometheus.id]
   }  
 
   egress {
