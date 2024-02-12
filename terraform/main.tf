@@ -12,10 +12,6 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-data aws_subnet_ids current {
-  vpc_id = module.vpc.vpc_id
-}
-
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "2.77.0"
