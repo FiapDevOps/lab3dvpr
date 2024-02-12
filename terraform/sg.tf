@@ -65,6 +65,10 @@ resource "aws_security_group" "lab_server" {
     cidr_blocks     = ["0.0.0.0/0"]
   }
 
+  depends_on = [
+    aws_security_group.lab_prometheus
+  ]
+
   vpc_id = module.vpc.vpc_id
 }
 
