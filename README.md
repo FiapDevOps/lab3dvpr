@@ -19,8 +19,7 @@ sudo yum install -y yum-utils shadow-utils
 
 1.3. Instalação do terrraform
 ```sh
-sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-sudo yum -y install terraform
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo &&  sudo yum -y install terraform
 ```
 
 1.4. Verifique a instalação:
