@@ -19,7 +19,16 @@ scrape_configs:
       # Use the instance ID as the instance label
       - source_labels: [__meta_ec2_instance_id]
         target_label: instance
-      # Keep labels from ec2 discovered instances
+      - source_labels: ['tag_aws_autoscaling_groupName']
+        target_label: autoscaling_group
+      - source_labels: ['tag_env']
+        target_label: environment
+      - source_labels: ['tag_role']
+        target_label: role
+      # Drop all other tags
+      - action: labeldrop
+        regex: '(__meta_ec2_tag.+)'
+      # Keep labels from ec2 discovered instances except for droped
       - action: labelmap
         regex: '__meta_ec2_(.+)'
 
