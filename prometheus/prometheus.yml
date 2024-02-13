@@ -21,7 +21,7 @@ scrape_configs:
         target_label: instance
       # Keep labels from ec2 discovered instances
       - action: labelmap
-        regex: __meta_ec2_(.+)
+        regex: '__meta_ec2_(.+)'
 
   - job_name: 'ec2-application'
     ec2_sd_configs:
