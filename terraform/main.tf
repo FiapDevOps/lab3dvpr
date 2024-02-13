@@ -52,8 +52,7 @@ resource "aws_instance" "prometheus" {
     iam_instance_profile        = "LabInstanceProfile"
 
     tags = {
-        env         = "lab"
-        tier        = "fe"
+        env         = "production"
         Name        = "prometheus"
         role        = "monitor"
     }
@@ -83,14 +82,20 @@ resource "aws_autoscaling_group" "lab" {
   health_check_type    = "ELB"
 
   tag {
-    key                 = "tier"
-    value               = "fe"
+    key                 = "application_id"
+    value               = "1"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "application_version"
+    value               = "0.0.1"
     propagate_at_launch = true
   }
 
   tag {
     key                 = "env"
-    value               = "lab"
+    value               = "development"
     propagate_at_launch = true
   }
 
@@ -102,7 +107,7 @@ resource "aws_autoscaling_group" "lab" {
 
   tag {
     key                 = "Name"
-    value               = "server"
+    value               = "application-server"
     propagate_at_launch = true
   }  
 }

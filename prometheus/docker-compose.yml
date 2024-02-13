@@ -33,6 +33,29 @@ services:
     networks:
        monitoring:
 
+  prometheus-msteams:
+    image: quay.io/prometheusmsteams/prometheus-msteams:v1.5.2
+    ports:
+      - 9095:9095
+    environment:
+      - TEAMS_INCOMING_WEBHOOK_URL="https://outlook.office.com/webhook/xxx"
+      - TEAMS_REQUEST_URI=alertmanager
+    restart: unless-stopped
+    networks:
+       monitoring:
+
+  alertmanager:
+    image: prom/alertmanager:v0.26.0
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager-config.yml:/etc/alertmanager/config.yml
+    command:
+      - '-config.file=/etc/alertmanager/config.yml'
+    restart: unless-stopped
+    networks:
+       monitoring:
+
   grafana:
     image: grafana/grafana:10.3.1
     ports:
