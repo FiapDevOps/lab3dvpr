@@ -6,45 +6,45 @@ O prometheus é uma plataforma de monitoração modular baseada em uma linguagem
 
 A partir do cloud shell da conta de testes na AWS execute:
 
+1.1. Cópia do repositório git:
 ```sh
 # Git
 git clone https://github.com/fiapdevops/lab3dvpr.git
+```
 
-# Terraform
+1.2. Instalação das dependências:
+```sh
 sudo yum install -y yum-utils shadow-utils
+```
+
+1.3. Instalação do terrraform
+```sh
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo yum -y install terraform
 ```
 
-Verifique a instalação:
+1.4. Verifique a instalação:
 
 ```sh
 terraform version
 ```
 
-1.1. Inicie o terraform:
+1.5. Inicie o terraform:
 
 ```sh
-cd lab3dvpr/prometheus/terraform
+cd lab3dvpr/terraform
+
 terraform init
 terraform plan
 ```
 
-1.2. Verifique a partir do plan que o modelo fara a entrega de uma instancia ubuntu com base no template de [cloud-init](https://cloudinit.readthedocs.io/en/latest/) alocado no diretório "iac/templates" bem como as regras de liberação dos grupos de segurança para comunicacão entre o prometheus e as aplicações
+1.6. Verifique a partir do plan que o modelo fara a entrega de uma instancia ubuntu com base no template de [cloud-init](https://cloudinit.readthedocs.io/en/latest/) alocado no diretório "iac/templates" bem como as regras de liberação dos grupos de segurança para comunicacão entre o prometheus e as aplicações
 
 ```sh
 terraform apply
 ```
 
-> Será configurada uma nova instancia via terraform com o prometheus em listen na porta 80 e a aplicação em listen na porta 8080 de acordo com o padrão abaixo:
-
-| descrição                       | path                             |
-|---------------------------------|----------------------------------|
-| Interface do prometheus                      | \<prometheus_public_ip>:80                             |
-| Intarface do Grafana (Usuário e senha admin) | \<prometheus_public_ip>:3000                           |
-| Acesso na App de testes                      | \<prometheus_public_ip>:8080                           |
-| Scrape de métricas                           | \<prometheus_public_ip>:8080/metrics                   |
-| Scrape de métricas do sistema operacional    | \<prometheus_public_ip>:9100/metrics                   |
+> Será configurada uma nova instancia via terraform com o prometheus e um security group rodando a aplicação de testes, aguarda até o final do setup e acesse as URLs mostradas no Output do terraform
 
 ---
 
