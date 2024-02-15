@@ -15,4 +15,4 @@ runcmd:
   - chmod +x /usr/local/bin/docker-compose
   - git clone  --branch main https://github.com/fiapdevops/lab3dvpr /home/ubuntu/lab3dvpr
   - chown -R ubuntu:ubuntu /home/ubuntu/lab3dvpr
-  - sudo /usr/local/bin/docker-compose -f /home/ubuntu/lab3dvpr/prometheus/docker-compose.yml -p "lab" up -d
+  - sudo /usr/local/bin/docker-compose -f /home/ubuntu/lab3dvpr/monitoring/compose.yml up -d

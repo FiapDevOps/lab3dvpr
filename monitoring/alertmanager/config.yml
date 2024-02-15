@@ -9,4 +9,4 @@ receivers:
 - name: 'prometheus-msteams'
   webhook_configs: # https://prometheus.io/docs/alerting/configuration/#webhook_config 
   - send_resolved: true
-    url: 'http://prometheus-msteams:9095/alertmanager' # the prometheus-msteams proxy
+    url: 'http://prometheus-msteams:2000/alertmanager' # the prometheus-msteams proxy

@@ -59,8 +59,8 @@ Nesta versão da aplicação foi adicionada uma biblioteca para construção das
 Uma cópia deste padrão pode ser consultada no diretório build da pasta prometheus:
 
 ```sh
-ls $HOME/fiapdevops/lab3dvpr/prometheus/build
-cat $HOME/fiapdevops/lab3dvpr/prometheus/build/src/app.py
+ls $HOME/fiapdevops/lab3dvpr/build
+cat $HOME/fiapdevops/lab3dvpr/build/src/app.py
 ```
 
 Para gerar a app será utilizado uma imagem criada com base neste build disponível no Dockerhub [https://hub.docker.com/r/devfiap/python-flask-app](https://hub.docker.com/r/devfiap/python-flask-app);
@@ -191,97 +191,11 @@ Neste calculo também usamos outra característica do prometheus a função [sum
 
 ---
 
-# Criando uma regra de alerta
-
-No prometheus a construção de alertas é baseado em consultas usando o PROMQL, para testarmos o conceito execute o seguinte processo:
-
-3.1 A partir do ambiente local acesse remotamente a instancia onde a aplicação foi entregue e utilize o sudo para assumir uma permissão administrativa;
-
-3.2 Verifique que as regras de alerta ficam configuradas no arquivo rules.yml entregue no prometheus usando o docker-compose:
-
-```sh
-cd /home/ubuntu/observability/monitoring
-cat rules.yml
-```
-
-3.3 Adicione uma nova regra de alerta neste arquivo:
-
-```sh
-
-cat <<EOF >> rules.yml
-
-      - alert: NodeExporterDown
-        expr: up{job="node"} != 1
-        for: 5m
-        labels:
-          severity: high
-        annotations:
-          summary: The Node exporter metrics is down at $labels.instance
-EOF
-```
-
-3.4 Como a alteração foi executada após o build utilize o docker-compose para reconfigurar a nossa stack:
-
-```sh
-docker-compose restart
-```
-
-3.5 Com este processo temos uma regra especifica para validar a disponibilidade do job "node"responsável pelo node-exporter, simule uma falha no componente e acompanha o alerta pela interface do prometheus:
-
-```sh
-docker kill monitoring_node-exporter_1
-```
-
 **Acessando o Grafana**
 
 Para acessar o grafana utilize a porta :3000 do mesmo endereço de exposição do prometheus;
 
-Faremos o import [do dashboard de exemplo](https://grafana.com/grafana/dashboards/1860-node-exporter-full) que consumirá as métricas do datasource do node-exporter;
-
----
-
-## Configurando um cenário com service discovery:
-
-Dentro da arquitetura DevOps um conceito importante na monitoração de serviços é a agilidade, uma alternativa para conseguir esse objetivo é trabalhar com cenários de service discovery;
-
-4.1 Em nosso lab iremos configurar um novo job usando as credenciais da AWS para identificar automaticamente novos resources ec2, para isso execute o seguinte processo:
-
-```sh
-cd /home/ubuntu/observability/monitoring
-cat prometheus.yml
-```
-
-4.2 Ao final do arquivo adicione a configuração do novo job:
-
-```sh
-cat <<EOF >> prometheus.yml
-
-
-```sh
-  - job_name: 'node_ec2_job'
-    ec2_sd_configs:
-      - region: us-east-1
-        access_key: ACCESS_KEY
-        secret_key: SECRET_KEY
-        port: 9100
-    relabel_configs:
-      - source_labels: [__meta_ec2_instance_id]
-        target_label: ec2_instance_id
-      - source_labels: [__meta_ec2_tag_environment]
-        target_label: ec2_instance_env
-
-EOF
-```
-
-4.3 Utilize o docker-compose para reconfigurar a nossa stack:
-
-```sh
-docker-compose restart
-```
-
-4.4 Acesse a interface web e verifique o novo job em ação no ip da instancia de prometheus acessando a URL /service-discovery
-
-Uma documentação detalhada deste setup pode ser consultada neste link [Automatically monitoring EC2 Instances](https://www.robustperception.io/automatically-monitoring-ec2-instances);
+Faremos o import [do dashboard](https://grafana.com/grafana/dashboards/1860-node-exporter-full) que consumirá as métricas do datasource do node-exporter;
 
 ---
 
