@@ -51,7 +51,7 @@ services:
     volumes:
       - ./alertmanager-config.yml:/etc/alertmanager/config.yml
     command:
-      - '-config.file=/etc/alertmanager/config.yml'
+      - '--config.file=/etc/alertmanager/config.yml'
     restart: unless-stopped
     networks:
        monitoring:
